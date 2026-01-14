@@ -25,17 +25,6 @@ def Split_text_words(raw_text:str,pat = PAT):
         yield m.group(0)
 
 
-def Tokens_counting(pre_tokens: Iterator[str])-> dict[tuple, int]:
-    Tokens_Count = {}
-    for t in pre_tokens:
-        e = [bytes([x]) for x in t.encode('utf-8')]
-        pairs = [(e[i],e[i+1]) for i in range(len(e)-1)]
-        for element in pairs:
-            Tokens_Count[element] = Tokens_Count.get(element,0) + 1
-
-    return Tokens_Count 
-
-
 def merge_tokens(toks:list[bytes],pair:tuple[bytes,bytes]):
     new_toks = []
     i=0
@@ -59,6 +48,7 @@ def apply_merges(toks:list[bytes],merges:list[tuple[bytes,bytes]]):
 
 
 
+
 def count_pairs_with_merges(pre_tokens: Iterator[str], merges: list[tuple[bytes, bytes]]) -> dict[tuple[bytes, bytes], int]:
     Tokens_Count = {}
     for t in pre_tokens:
@@ -74,6 +64,31 @@ def count_pairs_with_merges(pre_tokens: Iterator[str], merges: list[tuple[bytes,
 
     
         
+def Optimized_Count_pairs(pre_tokens: Iterator[str]):
+    Tokens_Count = {}
+    Pair_index = {}
+    words = []
+    for wid, t in enumerate(pre_tokens):
+        e = [bytes([x]) for x in t.encode('utf-8')]
+        words.append(e)
+        for i in range(len(e)-1):
+            pair = (e[i], e[i+1])
+            Pair_index.setdefault(pair, []).append((wid, i))
+            Tokens_Count[pair] = Tokens_Count.get(pair, 0) + 1
+
+
+    return Tokens_Count,Pair_index,words
+
+    
+
+
+
+
+
+
+            
+         
+
 
 
 
