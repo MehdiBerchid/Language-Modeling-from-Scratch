@@ -61,19 +61,6 @@ def count_pairs_with_merges(pre_tokens: Iterator[str], merges: list[tuple[bytes,
 
 
     
-
-def train_bpe(text: str, num_merges: int) -> list[tuple[bytes, bytes]]:
-    merges = []
-    for _ in range(num_merges):
-        pre_tokens = Split_text_words(text)
-        pairs_counts = count_pairs_with_merges(pre_tokens,merges)
-        if not pairs_counts:
-            break
-        
-        best_pair = max(pairs_counts,key = lambda pair:(pairs_counts[pair],pair))
-        merges.append(best_pair)
-    return merges
-
         
 
 
