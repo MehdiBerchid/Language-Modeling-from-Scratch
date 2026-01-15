@@ -1,5 +1,8 @@
 # virtual env
 .venv/
+.env/
+.env*/
+LM_Scratch/
 
 # Python cache 
 __pycache__/
